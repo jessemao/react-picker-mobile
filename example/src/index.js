@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Picker from '../../lib/react-mobile-picker';
+import Picker from '../../lib/react-picker-mb';
 import './index.css';
 
 ReactDOM.render( <

@@ -1,11 +1,11 @@
 {
-	"name": "react-picker-mobile",
+	"name": "react-picker-mb",
 	"version": "0.1.0",
 	"description": "A picker component for mobile device",
-	"main": "lib/react-picker-mobile.js",
+	"main": "lib/react-picker-mb.js",
 	"repository": {
 		"type": "git",
-		"url": ""
+		"url": "https://github.com/jessemao/react-picker-mobile"
 	},
 	"devDependencies": {
 		"autoprefixer-loader": "^3.2.0",

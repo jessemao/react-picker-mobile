@@ -2,7 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
 	entry: {
-		'react-mobile-picker': './src/Picker.jsx'
+		'react-picker-mb': './src/Picker.jsx'
 	},
 
 	output: {
