@@ -12,10 +12,10 @@ class Picker extends Component {
     };
   }
   getInitValue(props) {
-    return props.slots.map((slot) => {
+    return props.pickerSlots.map((slot) => {
       const defaultIndex = slot.defaultIndex || 0;
-      if (slot.values) {
-        const res = slot.values[defaultIndex];
+      if (slot.options) {
+        const res = slot.options[defaultIndex];
         if (typeof res === 'object') {
           return slot.dataKey ? res[slot.dataKey] : '';
         } else {
@@ -44,10 +44,10 @@ class Picker extends Component {
     this.props.onChange(resultValue);
   }
   renderPickSlot() {
-    const { slots, visibleItemCount, rotateEffect, itemHeight } = this.props;
-    const { pickValue } = this.state;
-    return slots.map((slot, idx) => {
-      const values = slot.values ? slot.values.map((d) => {
+    const {pickerSlots, visibleItemCount, rotateEffect, itemHeight} = this.props;
+    const {pickValue} = this.state;
+    return pickerSlots.map((slot, idx) => {
+      const values = slot.options ? slot.options.map((d) => {
         if (typeof d === 'object') {
           return slot.dataKey ? d[slot.dataKey] : '';
         }
@@ -75,32 +75,31 @@ class Picker extends Component {
     })
   }
   render() {
-    const { rotateEffect, showToolbar, children = '', itemHeight } = this.props;
+    const {rotateEffect, showToolbar, children = '', itemHeight} = this.props;
     const className = classnames('picker', {
       'picker-3d': rotateEffect
     })
     return (
-      <div className={className}>
-        {
-          showToolbar && (
-            <div className='picker-toolbar'>{children}</div>
-          )
-        }
+      <div className={ className }>
+        { showToolbar && (
+          <div className='picker-toolbar'>
+            { children }
+          </div>
+          ) }
         <div className='picker-items'>
-          {this.renderPickSlot()}
-          <div className="picker-center-highlight" style={{ height: itemHeight + 'px', marginTop: -itemHeight / 2 + 'px' }}></div>
+          { this.renderPickSlot() }
+          <div className="picker-center-highlight" style={ { height: itemHeight + 'px', marginTop: -itemHeight / 2 + 'px' } }></div>
         </div>
       </div>
-    );
+      );
   }
 }
 
 Picker.propTypes = {
   itemHeight: PropTypes.number,
   rotateEffect: PropTypes.bool,
-  dataKey: PropTypes.string,
   showToolbar: PropTypes.bool,
-  slots: PropTypes.array,
+  pickerSlots: PropTypes.array,
   visibleItemCount: PropTypes.number,
   onChange: PropTypes.func
 };
@@ -109,9 +108,10 @@ Picker.defaultProps = {
   itemHeight: 36,
   rotateEffect: false,
   showToolbar: false,
-  slots: [],
+  pickerSlots: [],
   visibleItemCount: 5,
-  onChange: () => { },
+  onChange: () => {
+  },
 };
 
 export default Picker;

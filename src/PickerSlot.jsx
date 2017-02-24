@@ -5,7 +5,7 @@ import translateUtil from './utils/translate';
 import { once } from './utils/dom';
 import './PickerSlot.css';
 
-var rotateElement = function (element, angle) {
+var rotateElement = function(element, angle) {
   if (!element) return;
   var transformProperty = translateUtil.transformProperty;
   element.style[transformProperty] = element.style[transformProperty].replace(/rotateX\(.+?deg\)/gi, '') + ` rotateX(${angle}deg)`;
@@ -47,11 +47,11 @@ class PickerSlot extends Component {
     }
   }
   calcDragRange() {
-    const { visibleItemCount, itemHeight, data } = this.props;
+    const {visibleItemCount, itemHeight, data} = this.props;
     return [-itemHeight * (data.length - Math.ceil(visibleItemCount / 2)), itemHeight * Math.floor(visibleItemCount / 2)];
   }
   customClassNames() {
-    const { rotateEffect, textAlign, divider, className } = this.props;
+    const {rotateEffect, textAlign, divider, className} = this.props;
     const PREFIX = 'picker-slot-';
     return classnames({
       [`${PREFIX}${textAlign}`]: true,
@@ -59,8 +59,8 @@ class PickerSlot extends Component {
     }, className);
   }
   valueToTranslate(value) {
-    const { data } = this.props;
-    const { visibleItemCount, itemHeight } = this.props;
+    const {data} = this.props;
+    const {visibleItemCount, itemHeight} = this.props;
     var valueIndex = data.indexOf(value);
     var offset = Math.floor(visibleItemCount / 2);
     if (valueIndex !== -1) {
@@ -68,13 +68,13 @@ class PickerSlot extends Component {
     }
   }
   translateToValue(translate) {
-    const { itemHeight, visibleItemCount, data } = this.props;
+    const {itemHeight, visibleItemCount, data} = this.props;
     translate = Math.round(translate / itemHeight) * itemHeight;
     var index = -(translate - Math.floor(visibleItemCount / 2) * itemHeight) / itemHeight;
     return data[index];
   }
   updateRotate(currentTranslate, pickerItems) {
-    const { divider, visibleItemCount, itemHeight, slotIndex } = this.props;
+    const {divider, visibleItemCount, itemHeight, slotIndex} = this.props;
     if (divider) return;
     var dragRange = this.calcDragRange();
     var wrapper = document.querySelector(`#picker-wrapper-${slotIndex}`);
@@ -91,8 +91,10 @@ class PickerSlot extends Component {
       var itemOffset = itemOffsetTop - translateOffset;
       var percentage = itemOffset / itemHeight;
       var angle = angleUnit * percentage;
-      if (angle > 180) angle = 180;
-      if (angle < -180) angle = -180;
+      if (angle > 180)
+        angle = 180;
+      if (angle < -180)
+        angle = -180;
       rotateElement(item, angle);
     });
   }
@@ -116,7 +118,9 @@ class PickerSlot extends Component {
     const {slotIndex} = this.props;
     const el = document.querySelector(`#picker-wrapper-${slotIndex}`);
     var dragState = {};
-    var velocityTranslate, prevTranslate, pickerItems;
+    var velocityTranslate,
+      prevTranslate,
+      pickerItems;
     draggable(el, {
       start: (event) => {
         cancelAnimationFrame(this.animationFrameId);
@@ -158,7 +162,7 @@ class PickerSlot extends Component {
           var dragRange = dragState.range;
           setTimeout(() => {
             var translate;
-            const { itemHeight, rotateEffect } = this.props;
+            const {itemHeight, rotateEffect} = this.props;
             if (momentumTranslate) {
               translate = Math.round(momentumTranslate / itemHeight) * itemHeight;
             } else {
@@ -192,51 +196,54 @@ class PickerSlot extends Component {
     }
   }
   onSelectChange() {
-    const { currentValue } = this.state;
-    const { onChange, slotIndex } = this.props;
+    const {currentValue} = this.state;
+    const {onChange, slotIndex} = this.props;
     const wrapper = document.querySelector(`#picker-wrapper-${slotIndex}`);
     translateUtil.translateElement(wrapper, null, this.valueToTranslate(currentValue));
     onChange(currentValue, slotIndex);
   }
   renderPickItemList() {
-    const { data, itemHeight } = this.props;
-    const { currentValue } = this.state
+    const {data, itemHeight} = this.props;
+    const {currentValue} = this.state
     return data.map((item, index) => {
       const className = classnames('picker-item', {
         'picker-selected': item === currentValue
       });
       return (
-        <div key={index} className={className} style={{ height: itemHeight + 'px', lineHeight: itemHeight + 'px' }}>
-          {item}
+        <div key={ index } className={ className } style={ { height: itemHeight + 'px', lineHeight: itemHeight + 'px' } }>
+          { item }
         </div>
       )
     })
   }
   render() {
-    var { className, divider, dividerContent, itemHeight, visibleItemCount, slotIndex } = this.props
+    var {className, divider, dividerContent, itemHeight, visibleItemCount, slotIndex} = this.props
     className = classnames('picker-slot', this.customClassNames());
-    const wrapperClass = classnames('picker-slot-wrapper', { dragging: this.state.dragging });
+    const wrapperClass = classnames('picker-slot-wrapper', {
+      dragging: this.state.dragging
+    });
 
     const contentHeight = itemHeight * visibleItemCount;
     return (
-      <div className={className} style={this.flexStyle()}>
-        {
-          !divider ? (
-            <div id={`picker-wrapper-${slotIndex}`} className={wrapperClass} style={{ height: `${contentHeight}px` }}>
-              {this.renderPickItemList()}
-            </div>
+      <div className={ className } style={ this.flexStyle() }>
+        { !divider ? (
+          <div id={ `picker-wrapper-${slotIndex}` } className={ wrapperClass } style={ { height: `${contentHeight}px` } }>
+            { this.renderPickItemList() }
+          </div>
           ) : (
-              <div>{dividerContent}</div>
-            )
-        }
+          <div>
+            { dividerContent }
+          </div>
+          ) }
       </div>
-    );
+      );
   }
 }
 
 PickerSlot.propTypes = {
   className: PropTypes.string,
   data: PropTypes.array,
+  dataKey: PropTypes.string,
   divider: PropTypes.bool,
   dividerContent: PropTypes.string,
   itemHeight: PropTypes.number,
@@ -257,6 +264,6 @@ PickerSlot.defaultProps = {
   slotIndex: 0,
 };
 
-PickerSlot.displayName = "PickerSlot";
+PickerSlot.displayName = 'PickerSlot';
 
 export default PickerSlot;
