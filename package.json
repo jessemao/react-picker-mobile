@@ -1,6 +1,6 @@
 {
 	"name": "react-picker-mb",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A picker component for mobile device",
 	"main": "lib/react-picker-mb.js",
 	"repository": {
