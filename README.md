@@ -41,7 +41,7 @@ var Picker = require('react-picker-mb');
 | textAlign      | String  | 'center' | Can be 'left/center/right'. Text alignment of the picker column.                                                                                                                                     |
 
 # Getting Started
-To play it yourself, you can clone this repo and run the example in your local space.
+To play it yourself, you can clone this repo and run the example in your local space. Or you can play with the picker [here](https://jessemao.github.io/react-picker-mobile/)
 ```
 git clone https://github.com/jessemao/react-picker-mobile.git
 cd react-picker-mobile && cd example
