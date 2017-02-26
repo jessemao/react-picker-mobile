@@ -74,10 +74,10 @@ class PickerSlot extends Component {
     return data[index];
   }
   updateRotate(currentTranslate, pickerItems) {
-    const {divider, visibleItemCount, itemHeight, slotIndex} = this.props;
+    const {divider, visibleItemCount, itemHeight} = this.props;
     if (divider) return;
     var dragRange = this.calcDragRange();
-    var wrapper = document.querySelector(`#picker-wrapper-${slotIndex}`);
+    var wrapper = this.wrapper;
     if (!pickerItems) {
       pickerItems = wrapper.querySelectorAll('.picker-item');
     }
@@ -99,8 +99,7 @@ class PickerSlot extends Component {
     });
   }
   planUpdateRotate() {
-    const {slotIndex} = this.props;
-    var el = document.querySelector(`#picker-wrapper-${slotIndex}`);
+    var el = this.wrapper;
     cancelAnimationFrame(this.state.animationFrameId);
     this.setState({
       animationFrameId: requestAnimationFrame(() => {
@@ -115,8 +114,7 @@ class PickerSlot extends Component {
     });
   }
   initEvents() {
-    const {slotIndex} = this.props;
-    const el = document.querySelector(`#picker-wrapper-${slotIndex}`);
+    const el = this.wrapper;
     var dragState = {};
     var velocityTranslate,
       prevTranslate,
@@ -198,7 +196,7 @@ class PickerSlot extends Component {
   onSelectChange() {
     const {currentValue} = this.state;
     const {onChange, slotIndex} = this.props;
-    const wrapper = document.querySelector(`#picker-wrapper-${slotIndex}`);
+    const wrapper = this.wrapper;
     translateUtil.translateElement(wrapper, null, this.valueToTranslate(currentValue));
     onChange(currentValue, slotIndex);
   }
@@ -217,7 +215,7 @@ class PickerSlot extends Component {
     })
   }
   render() {
-    var {className, divider, dividerContent, itemHeight, visibleItemCount, slotIndex} = this.props
+    var {className, divider, dividerContent, itemHeight, visibleItemCount} = this.props
     className = classnames('picker-slot', this.customClassNames());
     const wrapperClass = classnames('picker-slot-wrapper', {
       dragging: this.state.dragging
@@ -227,7 +225,7 @@ class PickerSlot extends Component {
     return (
       <div className={ className } style={ this.flexStyle() }>
         { !divider ? (
-          <div id={ `picker-wrapper-${slotIndex}` } className={ wrapperClass } style={ { height: `${contentHeight}px` } }>
+          <div ref={ (wrapper) => this.wrapper = wrapper } className={ wrapperClass } style={ { height: `${contentHeight}px` } }>
             { this.renderPickItemList() }
           </div>
           ) : (
