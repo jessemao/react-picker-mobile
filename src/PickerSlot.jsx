@@ -229,8 +229,7 @@ class PickerSlot extends Component {
             { this.renderPickItemList() }
           </div>
           ) : (
-          <div>
-            { dividerContent }
+          <div dangerouslySetInnerHTML={ { __html: dividerContent } }>
           </div>
           ) }
       </div>
